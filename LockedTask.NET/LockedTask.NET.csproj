@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <langVersion>10</langVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>1.0.0.0</Version>
+    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Authors>S Christison</Authors>
+    <Company>S Christison</Company>
+    <Copyright>S Christison ©2022</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>X:\BT.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup> 
+    <IsPublishable>False</IsPublishable>
+    <PackageId>LockedTask.NET</PackageId>
+    <Description>A Simple Task locked with a Semiphore</Description>
+    <PackageProjectUrl>https://github.com/HypsyNZ/LockedTask.NET</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/HypsyNZ/LockedTask.NET</RepositoryUrl>
+    <BaseOutputPath>bin\</BaseOutputPath>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <DebugType>embedded</DebugType>
+    <PackageReleaseNotes>https://github.com/HypsyNZ/LockedTask.NET/tree/main/LockedTask</PackageReleaseNotes>
+    <PackageTags>task, semiphore, lock, simple, runasync, async</PackageTags>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+  </ItemGroup>
+</Project>
