@@ -15,7 +15,14 @@ Run the `Task`
 NewLockedTask.RunAsync(YourTaskMethod()).ConfigureAwait(false);
 ```
 
+By default the awaiter for your `TaskMethod()` will be set to `false` but you can change it if you want
+```cs
+NewLockedTask.RunAsync(YourTaskMethod(), true).ConfigureAwait(false);
+```
+
 Its that Simple.
+
+[[![example](https://user-images.githubusercontent.com/54571583/173622705-ba160786-c0f2-49c7-af9c-2bd4d19467f0.png)]](https://github.com/HypsyNZ/BinanceTrader.NET)
 
 ### Optional
 
