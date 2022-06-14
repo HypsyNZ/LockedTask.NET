@@ -27,7 +27,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace LockedTask.NET
+namespace System.Threading.Tasks.LockedTask
 {
     /// <summary>
     /// A Task that uses a Semiphore Automatically (Lock)
