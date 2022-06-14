@@ -2,6 +2,10 @@
 
 [![Nuget](https://img.shields.io/nuget/v/LockedTask.NET)](https://www.nuget.org/packages/LockedTask.NET)
 
+```cs
+using System.Threading.Tasks.LockedTask;
+```
+
 # Usage
 
 Create a new `LockedTask`
