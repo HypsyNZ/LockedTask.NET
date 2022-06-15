@@ -41,11 +41,28 @@ namespace System.Threading.Tasks.LockedTask
 
         public SemaphoreSlim Semaphore { get; protected set; } = new(1, 1);
 
+        /// <summary>
+        /// Run the Task Asynchronously, Waiting for the lock if it is busy.
+        /// </summary>
+        /// <param name="theTask">Task to run inside the lock</param>
+        /// <returns></returns>
+        public async void RunAsync(Task theTask) => await Run(theTask, 0, false).ConfigureAwait(false);
+
+        /// <summary>
+        /// Run the Task Asynchronously, Waiting for the lock if it is busy.
+        /// </summary>
+        /// <param name="theTask">Task to run inside the lock</param>
+        /// <param name="timeout">How long to wait in milliseconds before returning without completing the Task</param>
+        /// <returns></returns>
         public async void RunAsync(Task theTask, int timeout) => await Run(theTask, timeout, false).ConfigureAwait(false);
 
+        /// <summary>
+        /// Run the Task Asynchronously, Waiting for the lock if it is busy.
+        /// </summary>
+        /// <param name="theTask">Task to run inside the lock</param>
+        /// <param name="configureAwaiter">Set to true to wait for the Synchronization Context</param>
+        /// <returns></returns>
         public async void RunAsync(Task theTask, bool configureAwaiter) => await Run(theTask, 0, configureAwaiter).ConfigureAwait(configureAwaiter);
-
-        public async void RunAsync(Task theTask, int timeout = 0, bool configureAwaiter = false) => await Run(theTask, timeout, configureAwaiter).ConfigureAwait(configureAwaiter);
 
         /// <summary>
         /// Run the Task Asynchronously, Waiting for the lock if it is busy.
@@ -54,7 +71,7 @@ namespace System.Threading.Tasks.LockedTask
         /// <param name="timeout">How long to wait in milliseconds before returning without completing the Task</param>
         /// <param name="configureAwaiter">Set to true to wait for the Synchronization Context</param>
         /// <returns></returns>
-        public async Task Run(Task theTask, int timeout, bool configureAwaiter)
+        public async Task Run(Task theTask, int timeout = 0, bool configureAwaiter = false)
         {
             if (await Semaphore.WaitAsync(timeout).ConfigureAwait(configureAwaiter))
             {

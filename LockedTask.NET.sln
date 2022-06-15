@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LockedTask.NET", "LockedTask.NET\LockedTask.NET.csproj", "{9D6D7150-933A-4930-ACCB-3EC060E80414}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example\Example\Example.csproj", "{FBA038AA-D43A-4A2E-AA3F-4944F17C4BE2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9D6D7150-933A-4930-ACCB-3EC060E80414} = {9D6D7150-933A-4930-ACCB-3EC060E80414}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
