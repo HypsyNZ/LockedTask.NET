@@ -1,3 +1,6 @@
+### Version 1.0.2.2
+- [x] Documentation
+
 ### Version 1.0.2
 - [x] Embed Untracked Sources
 - [x] Symbol Package Format
