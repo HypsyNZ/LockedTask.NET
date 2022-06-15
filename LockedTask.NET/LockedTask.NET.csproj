@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>1.0.2.0</Version>
-    <FileVersion>1.0.2.0</FileVersion>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <Version>1.0.2.2</Version>
+    <FileVersion>1.0.2.2</FileVersion>
+    <AssemblyVersion>1.0.2.2</AssemblyVersion>
     <Authors>S Christison</Authors>
     <Company>S Christison</Company>
     <Copyright>S Christison ©2022</Copyright>
@@ -26,7 +26,7 @@
   <PropertyGroup> 
     <IsPublishable>False</IsPublishable>
     <PackageId>LockedTask.NET</PackageId>
-    <Description>A Simple Task locked with a Semiphore</Description>
+    <Description>A Lightweight Task that is Locked with a Semiphore Automatically</Description>
     <PackageProjectUrl>https://github.com/HypsyNZ/LockedTask.NET</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HypsyNZ/LockedTask.NET</RepositoryUrl>
     <BaseOutputPath>bin\</BaseOutputPath>
