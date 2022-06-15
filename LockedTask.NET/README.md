@@ -1,3 +1,7 @@
+### Version 1.0.4
+- [x] More Overloads
+- [x] Fix a bug in Overloads
+
 ### Version 1.0.3.2
 - [x] Overloads
 
