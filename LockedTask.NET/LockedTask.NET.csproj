@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>1.0.5.1</Version>
-    <FileVersion>1.0.5.1</FileVersion>
-    <AssemblyVersion>1.0.5.1</AssemblyVersion>
+    <Version>1.0.5.2</Version>
+    <FileVersion>1.0.5.2</FileVersion>
+    <AssemblyVersion>1.0.5.2</AssemblyVersion>
     <Authors>S Christison</Authors>
     <Company>S Christison</Company>
     <Copyright>S Christison ©2022</Copyright>

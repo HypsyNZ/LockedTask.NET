@@ -93,12 +93,69 @@ namespace System.Threading.Tasks.LockedTask
         /// Run the Task Asynchronously, Waiting for the lock if it is busy.
         /// </summary>
         /// <param name="theTask">Task to run inside the lock</param>
+        /// <returns></returns>
+        public async void RunAsync(Func<Task> theTask, CancellationToken token) => await Run(theTask, 0, false, token);
+
+        /// <summary>
+        /// Run the Task Asynchronously, Waiting for the lock if it is busy.
+        /// </summary>
+        /// <param name="theTask">Task to run inside the lock</param>
+        /// <param name="timeout">How long to wait in milliseconds before returning without completing the Task</param>
+        /// <returns></returns>
+        public async void RunAsync(Func<Task> theTask, int timeout, CancellationToken token) => await Run(theTask, timeout, false, token);
+
+        /// <summary>
+        /// Run the Task Asynchronously, Waiting for the lock if it is busy.
+        /// </summary>
+        /// <param name="theTask">Task to run inside the lock</param>
+        /// <param name="configureAwaiter">Set to true to wait for the Synchronization Context</param>
+        /// <returns></returns>
+        public async void RunAsync(Func<Task> theTask, bool configureAwaiter, CancellationToken token) => await Run(theTask, 0, configureAwaiter, token);
+
+        /// <summary>
+        /// Run the Task Asynchronously, Waiting for the lock if it is busy.
+        /// </summary>
+        /// <param name="theTask">Task to run inside the lock</param>
+        /// <param name="timeout">How long to wait in milliseconds before returning without completing the Task</param>
+        /// <param name="configureAwaiter">Set to true to wait for the Synchronization Context</param>
+        /// <returns></returns>
+        public async void RunAsync(Func<Task> theTask, int timeout, bool configureAwaiter, CancellationToken token) => await Run(theTask, timeout, configureAwaiter, token);
+
+        /// <summary>
+        /// Run the Task Asynchronously, Waiting for the lock if it is busy.
+        /// </summary>
+        /// <param name="theTask">Task to run inside the lock</param>
         /// <param name="timeout">How long to wait in milliseconds before returning without completing the Task</param>
         /// <param name="configureAwaiter">Set to true to wait for the Synchronization Context</param>
         /// <returns></returns>
         protected async Task Run(Func<Task> theTask, int timeout = 0, bool configureAwaiter = false)
         {
             var r = await Semaphore.WaitAsync(timeout).ConfigureAwait(configureAwaiter);
+            if (r)
+            {
+                try
+                {
+                    _task = theTask;
+                    _configureAwait = configureAwaiter;
+                    await _task.Invoke().ConfigureAwait(_configureAwait);
+                }
+                finally
+                {
+                    Semaphore.Release();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Run the Task Asynchronously, Waiting for the lock if it is busy.
+        /// </summary>
+        /// <param name="theTask">Task to run inside the lock</param>
+        /// <param name="timeout">How long to wait in milliseconds before returning without completing the Task</param>
+        /// <param name="configureAwaiter">Set to true to wait for the Synchronization Context</param>
+        /// <returns></returns>
+        protected async Task Run(Func<Task> theTask, int timeout = 0, bool configureAwaiter = false, CancellationToken token = default)
+        {
+            var r = await Semaphore.WaitAsync(timeout, token).ConfigureAwait(configureAwaiter);
             if (r)
             {
                 try
