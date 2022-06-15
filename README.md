@@ -24,13 +24,27 @@ By default the `Awaiter` for your `TaskMethod()` will be set to `false` but you 
 NewLockedTask.RunAsync(YourTaskMethod(), true).ConfigureAwait(false);
 ```
 
+By default the `TimeOut` for the attempt is set to `0` and will enter the lock or return instantly, but you can change it.
+```cs
+NewLockedTask.RunAsync(YourTaskMethod(), 20).ConfigureAwait(false);
+```
+
 Its that Simple.
 
-[![example](https://user-images.githubusercontent.com/54571583/173622705-ba160786-c0f2-49c7-af9c-2bd4d19467f0.png)](https://github.com/HypsyNZ/BinanceTrader.NET)
+[![example](https://user-images.githubusercontent.com/54571583/173812205-949579fe-8bfb-4323-b0cb-2f1164fd8194.png)](https://github.com/HypsyNZ/BinanceTrader.NET)
+
 
 # Single Caller
 
 When a single `TaskMethod()` calls `RunAsync()` only one (by default) `TaskMethod()` will be allowed to run concurrently no matter how many times you call `RunAsync()`
+
+```cs
+   while (true)
+   {
+        NewLockedTask.RunAsync(YourTaskMethod()).ConfigureAwait(false);
+   }
+```
+
 
 # Multiple Callers
 

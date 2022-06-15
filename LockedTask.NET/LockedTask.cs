@@ -41,35 +41,44 @@ namespace System.Threading.Tasks.LockedTask
 
         public SemaphoreSlim Semaphore { get; protected set; } = new(1, 1);
 
+        public async void RunAsync(Task theTask, int timeout) => await Run(theTask, timeout, false).ConfigureAwait(false);
+
+        public async void RunAsync(Task theTask, bool configureAwaiter) => await Run(theTask, 0, configureAwaiter).ConfigureAwait(configureAwaiter);
+
+        public async void RunAsync(Task theTask, int timeout = 0, bool configureAwaiter = false) => await Run(theTask, timeout, configureAwaiter).ConfigureAwait(configureAwaiter);
+
         /// <summary>
         /// Run the Task Asynchronously, Waiting for the lock if it is busy.
         /// </summary>
         /// <param name="theTask">Task to run inside the lock</param>
+        /// <param name="timeout">How long to wait in milliseconds before returning without completing the Task</param>
         /// <param name="configureAwaiter">Set to true to wait for the Synchronization Context</param>
         /// <returns></returns>
-        public async Task RunAsync(Task theTask, bool configureAwaiter = false)
+        public async Task Run(Task theTask, int timeout, bool configureAwaiter)
         {
-            await Semaphore.WaitAsync().ConfigureAwait(configureAwaiter);
-            try
+            if (await Semaphore.WaitAsync(timeout).ConfigureAwait(configureAwaiter))
             {
-                _task = theTask;
-                _configureAwait = configureAwaiter;
+                try
+                {
+                    _task = theTask;
+                    _configureAwait = configureAwaiter;
 
-                //Stopwatch sw = Stopwatch.StartNew();
-                await _task.ConfigureAwait(_configureAwait);
-                //var test = sw.ElapsedMilliseconds;
-                //if (test > 0)
-                //{
-                //    Trace.WriteLine(test.ToString());
-                //}
-            }
-            catch
-            {
-                // Catch for Caller
-            }
-            finally
-            {
-                Semaphore.Release();
+                    //Stopwatch sw = Stopwatch.StartNew();
+                    await _task.ConfigureAwait(_configureAwait);
+                    //var test = sw.ElapsedMilliseconds;
+                    //if (test > 0)
+                    //{
+                    //    Trace.WriteLine(test.ToString());
+                    //}
+                }
+                catch
+                {
+                    // Catch for Caller
+                }
+                finally
+                {
+                    Semaphore.Release();
+                }
             }
         }
 
