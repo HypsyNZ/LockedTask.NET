@@ -1,3 +1,6 @@
+### Version 1.0.5.2
+- [x] CancellationToken
+
 ### Version 1.0.5.1
 - [x] Protected Run
 - [x] `Func<Task>`
