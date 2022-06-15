@@ -55,9 +55,9 @@ namespace Example
             {
                 while (true)
                 {
-                    lockedTask2.RunAsync(RunTask2(), 0);
+                    lockedTask2.RunAsync(RunTask2(), true);
                 }
-            }).ConfigureAwait(false);
+            }).ConfigureAwait(true);
 
             Console.ReadLine();
         }

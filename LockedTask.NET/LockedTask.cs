@@ -71,7 +71,37 @@ namespace System.Threading.Tasks.LockedTask
         /// <param name="timeout">How long to wait in milliseconds before returning without completing the Task</param>
         /// <param name="configureAwaiter">Set to true to wait for the Synchronization Context</param>
         /// <returns></returns>
-        public async Task Run(Task theTask, int timeout = 0, bool configureAwaiter = false)
+        public async void RunAsync(Task theTask, int timeout, bool configureAwaiter) => await Run(theTask, timeout, configureAwaiter).ConfigureAwait(configureAwaiter);
+
+        /// <summary>
+        /// Initialize a New Semiphore
+        /// <para>You should do this before you start calling <see href="RunAsync()"/> if you want to change the default; especially if you are calling <see href="RunAsync()"/> in a loop</para>
+        /// </summary>
+        /// <param name="initialCount">The initial number of requests for the semaphore that can be granted concurrently.</param>
+        /// <param name="maxCount">The maximum number of requests for the semaphore that can be granted concurrently.</param>
+        public void NewSemiphore(int initialCount, int maxCount)
+        {
+            Semaphore = new SemaphoreSlim(initialCount, maxCount);
+        }
+
+        /// <summary>
+        /// Initialize a New Semiphore
+        /// <para>Represents a lightweight alternative to System.Threading.Semaphore</para>
+        /// </summary>
+        /// <param name="semaphore">Represents a lightweight alternative to System.Threading.Semaphore</param>
+        public void NewSemiphore(SemaphoreSlim semaphore)
+        {
+            Semaphore = semaphore;
+        }
+
+        /// <summary>
+        /// Run the Task Asynchronously, Waiting for the lock if it is busy.
+        /// </summary>
+        /// <param name="theTask">Task to run inside the lock</param>
+        /// <param name="timeout">How long to wait in milliseconds before returning without completing the Task</param>
+        /// <param name="configureAwaiter">Set to true to wait for the Synchronization Context</param>
+        /// <returns></returns>
+        protected async Task Run(Task theTask, int timeout, bool configureAwaiter)
         {
             if (await Semaphore.WaitAsync(timeout).ConfigureAwait(configureAwaiter))
             {
@@ -97,27 +127,6 @@ namespace System.Threading.Tasks.LockedTask
                     Semaphore.Release();
                 }
             }
-        }
-
-        /// <summary>
-        /// Initialize a New Semiphore
-        /// <para>You should do this before you start calling <see href="RunAsync()"/> if you want to change the default; especially if you are calling <see href="RunAsync()"/> in a loop</para>
-        /// </summary>
-        /// <param name="initialCount">The initial number of requests for the semaphore that can be granted concurrently.</param>
-        /// <param name="maxCount">The maximum number of requests for the semaphore that can be granted concurrently.</param>
-        public void NewSemiphore(int initialCount, int maxCount)
-        {
-            Semaphore = new SemaphoreSlim(initialCount, maxCount);
-        }
-
-        /// <summary>
-        /// Initialize a New Semiphore
-        /// <para>Represents a lightweight alternative to System.Threading.Semaphore</para>
-        /// </summary>
-        /// <param name="semaphore">Represents a lightweight alternative to System.Threading.Semaphore</param>
-        public void NewSemiphore(SemaphoreSlim semaphore)
-        {
-            Semaphore = semaphore;
         }
     }
 }
