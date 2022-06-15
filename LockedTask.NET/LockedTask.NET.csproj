@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>1.0.4.0</Version>
-    <FileVersion>1.0.4.0</FileVersion>
-    <AssemblyVersion>1.0.4.0</AssemblyVersion>
+    <Version>1.0.5.0</Version>
+    <FileVersion>1.0.5.0</FileVersion>
+    <AssemblyVersion>1.0.5.0</AssemblyVersion>
     <Authors>S Christison</Authors>
     <Company>S Christison</Company>
     <Copyright>S Christison ©2022</Copyright>
@@ -34,10 +34,10 @@
     <RepositoryType>git</RepositoryType>
     <DebugType>embedded</DebugType>
     <PackageReleaseNotes>https://github.com/HypsyNZ/LockedTask.NET/tree/main/LockedTask.NET</PackageReleaseNotes>
-    <PackageTags>task, semiphore, lock, simple, runasync, async</PackageTags>
+    <PackageTags>task, semiphore, lock, simple, runasync, async, thread, safe, wait, timeout</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-	<Optimize>true</Optimize>
+	<Optimize>True</Optimize>
   </PropertyGroup>
 
   <ItemGroup>

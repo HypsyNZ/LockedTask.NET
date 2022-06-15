@@ -22,11 +22,6 @@
 *SOFTWARE.
 */
 
-using System;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace System.Threading.Tasks.LockedTask
 {
     /// <summary>
@@ -36,7 +31,7 @@ namespace System.Threading.Tasks.LockedTask
     /// </summary>
     public class LockedTask
     {
-        protected Task _task;
+        protected Func<Task> _task;
         protected bool _configureAwait = false;
 
         public SemaphoreSlim Semaphore { get; protected set; } = new(1, 1);
@@ -46,7 +41,7 @@ namespace System.Threading.Tasks.LockedTask
         /// </summary>
         /// <param name="theTask">Task to run inside the lock</param>
         /// <returns></returns>
-        public async void RunAsync(Task theTask) => await Run(theTask, 0, false).ConfigureAwait(false);
+        public async void RunAsync(Func<Task> theTask) => await Run(theTask, 0, false);
 
         /// <summary>
         /// Run the Task Asynchronously, Waiting for the lock if it is busy.
@@ -54,7 +49,7 @@ namespace System.Threading.Tasks.LockedTask
         /// <param name="theTask">Task to run inside the lock</param>
         /// <param name="timeout">How long to wait in milliseconds before returning without completing the Task</param>
         /// <returns></returns>
-        public async void RunAsync(Task theTask, int timeout) => await Run(theTask, timeout, false).ConfigureAwait(false);
+        public async void RunAsync(Func<Task> theTask, int timeout) => await Run(theTask, timeout, false);
 
         /// <summary>
         /// Run the Task Asynchronously, Waiting for the lock if it is busy.
@@ -62,7 +57,7 @@ namespace System.Threading.Tasks.LockedTask
         /// <param name="theTask">Task to run inside the lock</param>
         /// <param name="configureAwaiter">Set to true to wait for the Synchronization Context</param>
         /// <returns></returns>
-        public async void RunAsync(Task theTask, bool configureAwaiter) => await Run(theTask, 0, configureAwaiter).ConfigureAwait(configureAwaiter);
+        public async void RunAsync(Func<Task> theTask, bool configureAwaiter) => await Run(theTask, 0, configureAwaiter);
 
         /// <summary>
         /// Run the Task Asynchronously, Waiting for the lock if it is busy.
@@ -71,7 +66,7 @@ namespace System.Threading.Tasks.LockedTask
         /// <param name="timeout">How long to wait in milliseconds before returning without completing the Task</param>
         /// <param name="configureAwaiter">Set to true to wait for the Synchronization Context</param>
         /// <returns></returns>
-        public async void RunAsync(Task theTask, int timeout, bool configureAwaiter) => await Run(theTask, timeout, configureAwaiter).ConfigureAwait(configureAwaiter);
+        public async void RunAsync(Func<Task> theTask, int timeout, bool configureAwaiter) => await Run(theTask, timeout, configureAwaiter);
 
         /// <summary>
         /// Initialize a New Semiphore
@@ -101,26 +96,16 @@ namespace System.Threading.Tasks.LockedTask
         /// <param name="timeout">How long to wait in milliseconds before returning without completing the Task</param>
         /// <param name="configureAwaiter">Set to true to wait for the Synchronization Context</param>
         /// <returns></returns>
-        protected async Task Run(Task theTask, int timeout, bool configureAwaiter)
+        public async Task Run(Func<Task> theTask, int timeout = 0, bool configureAwaiter = false)
         {
-            if (await Semaphore.WaitAsync(timeout).ConfigureAwait(configureAwaiter))
+            var r = await Semaphore.WaitAsync(timeout).ConfigureAwait(configureAwaiter);
+            if (r)
             {
                 try
                 {
                     _task = theTask;
                     _configureAwait = configureAwaiter;
-
-                    //Stopwatch sw = Stopwatch.StartNew();
-                    await _task.ConfigureAwait(_configureAwait);
-                    //var test = sw.ElapsedMilliseconds;
-                    //if (test > 0)
-                    //{
-                    //    Trace.WriteLine(test.ToString());
-                    //}
-                }
-                catch
-                {
-                    // Catch for Caller
+                    await _task.Invoke().ConfigureAwait(_configureAwait);
                 }
                 finally
                 {

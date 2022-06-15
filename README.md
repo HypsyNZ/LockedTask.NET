@@ -1,5 +1,7 @@
 # LockedTask.NET
 
+[![example](https://user-images.githubusercontent.com/54571583/173836656-66c6b9d4-cd35-4862-9ecd-d2bc8b645d5e.png)](https://github.com/HypsyNZ/BinanceTrader.NET)
+
 ```cs
 using System.Threading.Tasks.LockedTask;
 ```
@@ -16,22 +18,18 @@ private static LockedTask NewLockedTask = new LockedTask();
 
 Run the `Task`
 ```cs
-NewLockedTask.RunAsync(YourTaskMethod());
+NewLockedTask.RunAsync(YourTaskMethod);
 ```
 
 By default the `Awaiter` for your `TaskMethod()` will be set to `false` but you can change it if you want
 ```cs
-NewLockedTask.RunAsync(YourTaskMethod(), true);
+NewLockedTask.RunAsync(YourTaskMethod, true);
 ```
 
 By default the `TimeOut` for the attempt is set to `0` and will enter the lock or return instantly, but you can change it.
 ```cs
-NewLockedTask.RunAsync(YourTaskMethod(), 20);
+NewLockedTask.RunAsync(YourTaskMethod, 20);
 ```
-
-Its that Simple.
-
-[![example](https://user-images.githubusercontent.com/54571583/173812205-949579fe-8bfb-4323-b0cb-2f1164fd8194.png)](https://github.com/HypsyNZ/BinanceTrader.NET)
 
 
 # Single Caller
@@ -41,7 +39,7 @@ When a single `TaskMethod()` calls `RunAsync()` only one (by default) `TaskMetho
 ```cs
    while (true)
    {
-        NewLockedTask.RunAsync(YourTaskMethod());
+        NewLockedTask.RunAsync(YourTaskMethod);
    }
 ```
 
@@ -53,8 +51,8 @@ Multiple `TaskMethods()` can attempt to enter a single `LockedTask` and only one
 ```cs
    while (true)
    {
-        NewLockedTask.RunAsync(YourTaskMethod1());
-        NewLockedTask.RunAsync(YourTaskMethod2());
+        NewLockedTask.RunAsync(YourTaskMethod1);
+        NewLockedTask.RunAsync(YourTaskMethod2, true);
    }
 ```
 

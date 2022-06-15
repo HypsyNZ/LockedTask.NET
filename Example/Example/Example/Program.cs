@@ -23,6 +23,7 @@
 */
 
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Threading.Tasks.LockedTask;
 
@@ -39,7 +40,7 @@ namespace Example
             {
                 while (true)
                 {
-                    lockedTask.RunAsync(RunTask1());
+                    lockedTask.RunAsync(RunTask1);
                 }
             }).ConfigureAwait(false);
 
@@ -47,7 +48,7 @@ namespace Example
             {
                 while (true)
                 {
-                    lockedTask.RunAsync(RunTask3(), 20);
+                    lockedTask.RunAsync(RunTask3);
                 }
             }).ConfigureAwait(false);
 
@@ -55,7 +56,7 @@ namespace Example
             {
                 while (true)
                 {
-                    lockedTask2.RunAsync(RunTask2(), true);
+                    lockedTask2.RunAsync(RunTask2);
                 }
             }).ConfigureAwait(true);
 
@@ -64,20 +65,20 @@ namespace Example
 
         private static async Task RunTask1()
         {
+            await Task.Delay(5000).ConfigureAwait(true);
             Console.WriteLine("1");
-            await Task.Delay(128).ConfigureAwait(false);
         }
 
         private static async Task RunTask2()
         {
+            await Task.Delay(2500).ConfigureAwait(true);
             Console.WriteLine("2");
-            await Task.Delay(256).ConfigureAwait(false);
         }
 
         private static async Task RunTask3()
         {
+            await Task.Delay(5000).ConfigureAwait(true);
             Console.WriteLine("3");
-            await Task.Delay(512).ConfigureAwait(false);
         }
     }
 }
