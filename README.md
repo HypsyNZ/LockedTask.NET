@@ -16,17 +16,17 @@ private static LockedTask NewLockedTask = new LockedTask();
 
 Run the `Task`
 ```cs
-NewLockedTask.RunAsync(YourTaskMethod()).ConfigureAwait(false);
+NewLockedTask.RunAsync(YourTaskMethod());
 ```
 
 By default the `Awaiter` for your `TaskMethod()` will be set to `false` but you can change it if you want
 ```cs
-NewLockedTask.RunAsync(YourTaskMethod(), true).ConfigureAwait(false);
+NewLockedTask.RunAsync(YourTaskMethod(), true);
 ```
 
 By default the `TimeOut` for the attempt is set to `0` and will enter the lock or return instantly, but you can change it.
 ```cs
-NewLockedTask.RunAsync(YourTaskMethod(), 20).ConfigureAwait(false);
+NewLockedTask.RunAsync(YourTaskMethod(), 20);
 ```
 
 Its that Simple.
@@ -41,7 +41,7 @@ When a single `TaskMethod()` calls `RunAsync()` only one (by default) `TaskMetho
 ```cs
    while (true)
    {
-        NewLockedTask.RunAsync(YourTaskMethod()).ConfigureAwait(false);
+        NewLockedTask.RunAsync(YourTaskMethod());
    }
 ```
 
@@ -53,8 +53,8 @@ Multiple `TaskMethods()` can attempt to enter a single `LockedTask` and only one
 ```cs
    while (true)
    {
-        NewLockedTask.RunAsync(YourTaskMethod1()).ConfigureAwait(false);
-        NewLockedTask.RunAsync(YourTaskMethod2()).ConfigureAwait(false);
+        NewLockedTask.RunAsync(YourTaskMethod1());
+        NewLockedTask.RunAsync(YourTaskMethod2());
    }
 ```
 
