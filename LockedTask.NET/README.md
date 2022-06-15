@@ -1,3 +1,6 @@
+### Version 1.0.3.2
+- [x] Overloads
+
 ### Version 1.0.3
 - [x] Add `Timeout` (`1-1` is infinite, default `0`)
 - [x] `RunAsync()` now returns instantly if it doesn't enter the lock (default timeout)
