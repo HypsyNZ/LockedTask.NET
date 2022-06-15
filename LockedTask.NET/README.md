@@ -1,3 +1,7 @@
+### Version 1.0.5.1
+- [x] Protected Run
+- [x] `Func<Task>`
+
 ### Version 1.0.4
 - [x] More Overloads
 - [x] Fix a bug in Overloads
