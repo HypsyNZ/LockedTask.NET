@@ -96,7 +96,7 @@ namespace System.Threading.Tasks.LockedTask
         /// <param name="timeout">How long to wait in milliseconds before returning without completing the Task</param>
         /// <param name="configureAwaiter">Set to true to wait for the Synchronization Context</param>
         /// <returns></returns>
-        public async Task Run(Func<Task> theTask, int timeout = 0, bool configureAwaiter = false)
+        protected async Task Run(Func<Task> theTask, int timeout = 0, bool configureAwaiter = false)
         {
             var r = await Semaphore.WaitAsync(timeout).ConfigureAwait(configureAwaiter);
             if (r)
