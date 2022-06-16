@@ -1,3 +1,7 @@
+### Version 1.0.5.3
+- [x] Compatibility
+- [x] Improve example to be less confusing
+
 ### Version 1.0.5.2
 - [x] CancellationToken
 
