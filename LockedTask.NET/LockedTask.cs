@@ -34,7 +34,7 @@ namespace System.Threading.Tasks.LockedTask
         protected Func<Task> _task;
         protected bool _configureAwait = false;
 
-        public SemaphoreSlim Semaphore { get; protected set; } = new(1, 1);
+        public SemaphoreSlim Semaphore { get; protected set; } = new SemaphoreSlim(1, 1);
 
         /// <summary>
         /// Run the Task Asynchronously, Waiting for the lock if it is busy.

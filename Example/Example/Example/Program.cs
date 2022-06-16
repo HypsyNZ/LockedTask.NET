@@ -32,7 +32,7 @@ namespace Example
     internal class Program
     {
         public static LockedTask lockedTask = new LockedTask();
-        public static LockedTask lockedTask2 = new LockedTask();
+        //public static LockedTask lockedTask2 = new LockedTask();
 
         private static void Main(string[] args)
         {
@@ -52,32 +52,32 @@ namespace Example
                 }
             }).ConfigureAwait(false);
 
-            _ = Task.Run(() =>
-            {
-                while (true)
-                {
-                    lockedTask2.RunAsync(RunTask2);
-                }
-            }).ConfigureAwait(true);
+            //_ = Task.Run(() =>
+            //{
+            //    while (true)
+            //    {
+            //        lockedTask2.RunAsync(RunTask2);
+            //    }
+            //}).ConfigureAwait(false);
 
             Console.ReadLine();
         }
 
         private static async Task RunTask1()
         {
-            await Task.Delay(5000).ConfigureAwait(true);
+            await Task.Delay(5000).ConfigureAwait(false);
             Console.WriteLine("1");
         }
 
-        private static async Task RunTask2()
-        {
-            await Task.Delay(2500).ConfigureAwait(true);
-            Console.WriteLine("2");
-        }
+        //private static async Task RunTask2()
+        //{
+        //    await Task.Delay(2500).ConfigureAwait(false);
+        //    Console.WriteLine("2");
+        //}
 
         private static async Task RunTask3()
         {
-            await Task.Delay(5000).ConfigureAwait(true);
+            await Task.Delay(5000).ConfigureAwait(false);
             Console.WriteLine("3");
         }
     }
